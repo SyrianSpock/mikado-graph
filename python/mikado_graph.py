@@ -10,6 +10,7 @@ from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 
 Edge = namedtuple('Edge', ['src', 'dst', 'done'])
 Node = namedtuple('Node', ['name', 'done', 'goal'])
+DONE_SYMBOLS = ['x', 'X', 'v', 'V']
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Generate mikado graph from description.')
@@ -36,7 +37,7 @@ def parse_mikado_description(description_file):
         return nodes, edges
 
 def _task_done(task):
-    return task.startswith('x')
+    return any(task.startswith(symbol) for symbol in DONE_SYMBOLS)
 
 def _task_strip(task):
     return ' '.join(task.split(' ')[1:]).lstrip()
