@@ -1,0 +1,8 @@
+_ Extend X with Y
+    x Remove flag Z from X
+        x Replace D with E
+            x Check C
+    _ Add field X in Y
+        x Do fix A
+        _ Add B
+        x Check C
