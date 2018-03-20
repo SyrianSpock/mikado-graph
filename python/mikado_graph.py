@@ -7,6 +7,7 @@ from graphviz import Digraph
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 
+
 Edge = namedtuple('Edge', ['src', 'dst', 'done'])
 Node = namedtuple('Node', ['name', 'done', 'goal'])
 
@@ -16,6 +17,8 @@ def parse_arguments():
     parser.add_argument('file', type=str, help='Mikado description file')
     parser.add_argument('-o', '--output', type=str, help='Mikado graph output')
     parser.add_argument('-v', '--view', action='store_true', help='View generated Mikado graph')
+    parser.add_argument('-w', '--watch', action='store_true',
+                        help='Watch Mikado description file for changes and regenerate graph')
 
     return parser.parse_args()
 
@@ -83,6 +86,24 @@ def main():
     args = parse_arguments()
 
     render_graph(args.file, args.view, args.output)
+
+    if args.watch:
+        class MikadoGraphWatcher(FileSystemEventHandler):
+            def on_modified(self, event):
+                if event == FileModifiedEvent(os.path.join('.', args.file)):
+                    render_graph(args.file, args.view, args.output)
+
+        event_handler = MikadoGraphWatcher()
+        observer = Observer()
+        observer.schedule(event_handler, path=os.path.dirname(args.file) or '.', recursive=False)
+        observer.start()
+
+        try:
+            while True: time.sleep(1)
+        except KeyboardInterrupt:
+            observer.stop()
+
+        observer.join()
 
 if __name__ == '__main__':
     main()
