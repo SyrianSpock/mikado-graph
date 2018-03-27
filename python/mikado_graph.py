@@ -24,12 +24,19 @@ def parse_arguments():
 
     return parser.parse_args()
 
+def cleanup_test_to_comply_with_dot(line):
+    return line \
+        .replace(':', 'ː') \
+        .replace('(', '\\(') \
+        .replace(')', '\\)') \
+
 def parse_mikado_description(description_file):
     with open(description_file, 'r') as file:
         text = file.read()
         lines = text.split('\n')
 
         lines = list(filter(lambda line: all(symbol not in line.lstrip() for symbol in COMMENT_SYMBOLS), lines))
+        lines = list(map(cleanup_test_to_comply_with_dot, lines))
         tasks = list((line.lstrip(), _depth_level(line)) for line in lines if len(line) > 0)
 
         nodes = list(Node(name=_task_strip(task), done=_task_done(task), goal=depth==0) for task, depth in set(tasks))
