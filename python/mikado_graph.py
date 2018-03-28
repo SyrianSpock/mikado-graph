@@ -37,6 +37,7 @@ def parse_mikado_description(description_file):
 
         lines = list(filter(lambda line: all(symbol not in line.lstrip() for symbol in COMMENT_SYMBOLS), lines))
         lines = list(map(cleanup_test_to_comply_with_dot, lines))
+        lines = list(map(lambda line: line.replace('\t', ' ' * 4), lines))
         tasks = list((line.lstrip(), _depth_level(line)) for line in lines if len(line) > 0)
 
         nodes = list(Node(name=_task_strip(task), done=_task_done(task), goal=depth==0) for task, depth in set(tasks))
