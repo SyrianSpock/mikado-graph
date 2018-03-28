@@ -87,7 +87,10 @@ def _append_edge(graph, edge):
 
 def render_graph(mikado_description, view, output_file):
     graph = draw_mikado_graph(*parse_mikado_description(mikado_description))
-    graph.render(view=view, cleanup=True)
+
+    output_dir = os.path.dirname(output_file or '')
+    output_gv = os.path.join(output_dir, os.path.basename(output_file or 'graph') + '.gv')
+    graph.render(filename=output_gv, view=view, cleanup=True)
 
     if output_file:
         graph.save(output_file)
