@@ -73,7 +73,7 @@ def _mikado_pairs(tasks, mikado_pairs, parents):
         return _mikado_pairs(tasks=tasks[1:], mikado_pairs=mikado_pairs, parents=[*parents, child])
 
 def draw_mikado_graph(nodes, edges):
-    graph = Digraph(strict=True)
+    graph = Digraph(strict=True, format='svg')
     for node in nodes: _append_node(graph, node)
     for edge in edges: _append_edge(graph, edge)
     return graph
