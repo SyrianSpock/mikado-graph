@@ -7,19 +7,19 @@ Python tool to draw graphs for Mikado refactoring.
 ```bash
 virtualenv -p python3 env
 source env/bin/activate
-pip install watchdog graphviz
+pip install .
 ```
 
 ## Usage
 
 ```bash
-python mikado-graph/mikado_graph.py mikado-graph/mikado_example.txt --view
+python -m mikado-graph.mikado_graph mikado-graph/mikado_example.txt --view
 ```
 will draw the graph from the specified input file and display it.
 
 Explore the options using `--help`
 ```bash
-python mikado-graph/mikado_graph.py --help
+python -m mikado-graph.mikado_graph --help
 ```
 
 ## Graph description symbols
