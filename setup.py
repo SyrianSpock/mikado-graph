@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="mikado-graph",
+    name="mikado_graph",
     version="0.1.0",
     author="Salah Missri",
     author_email="syrianspock@gmail.com",
