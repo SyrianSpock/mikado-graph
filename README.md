@@ -22,7 +22,7 @@ pip install mikado-graph
 mikado example.txt --view
 ```
 A new window should display the graph below
-![Example graph](https://github.com/SyrianSpock/mikado-graph/blob/master/example.png)
+![Example graph](https://raw.githubusercontent.com/SyrianSpock/mikado-graph/master/example.png)
 
 Explore the options using `--help`
 ```bash
