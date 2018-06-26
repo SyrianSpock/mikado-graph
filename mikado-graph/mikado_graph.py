@@ -80,11 +80,11 @@ def draw_mikado_graph(nodes, edges, format):
     return graph
 
 def _append_node(graph, node):
-    color = 'green' if node.done else 'black'
+    color = 'darkgreen' if node.done else 'firebrick'
     graph.node(node.name, color=color, fontcolor=color, peripheries='2' if node.goal else '1')
 
 def _append_edge(graph, edge):
-    color = 'green' if edge.done else 'black'
+    color = 'darkgreen' if edge.done else 'firebrick'
     graph.edge(edge.src, edge.dst, color=color)
 
 def render_graph(mikado_description, view, output_file, format):
