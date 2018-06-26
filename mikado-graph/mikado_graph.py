@@ -17,7 +17,8 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='Generate mikado graph from description.')
 
     parser.add_argument('file', type=str, help='Mikado description file')
-    parser.add_argument('-o', '--output', type=str, help='Mikado graph output')
+    parser.add_argument('-o', '--output', type=str, help='Mikado graph output file base name (no extension)')
+    parser.add_argument('-f', '--format', type=str, default='pdf', help='Mikado graph output format (default: pdf)')
     parser.add_argument('-v', '--view', action='store_true', help='View generated Mikado graph')
     parser.add_argument('-w', '--watch', action='store_true',
                         help='Watch Mikado description file for changes and regenerate graph')
@@ -72,8 +73,8 @@ def _mikado_pairs(tasks, mikado_pairs, parents):
     else:
         return _mikado_pairs(tasks=tasks[1:], mikado_pairs=mikado_pairs, parents=[*parents, child])
 
-def draw_mikado_graph(nodes, edges):
-    graph = Digraph(strict=True, format='svg')
+def draw_mikado_graph(nodes, edges, format):
+    graph = Digraph(strict=True, format=format)
     for node in nodes: _append_node(graph, node)
     for edge in edges: _append_edge(graph, edge)
     return graph
@@ -86,8 +87,8 @@ def _append_edge(graph, edge):
     color = 'green' if edge.done else 'black'
     graph.edge(edge.src, edge.dst, color=color)
 
-def render_graph(mikado_description, view, output_file):
-    graph = draw_mikado_graph(*parse_mikado_description(mikado_description))
+def render_graph(mikado_description, view, output_file, format):
+    graph = draw_mikado_graph(*parse_mikado_description(mikado_description), format=format)
 
     output_dir = os.path.dirname(output_file or '')
     output_gv = os.path.join(output_dir, os.path.basename(output_file or 'graph') + '.gv')
@@ -99,13 +100,13 @@ def render_graph(mikado_description, view, output_file):
 def main():
     args = parse_arguments()
 
-    render_graph(args.file, args.view, args.output)
+    render_graph(args.file, args.view, args.output, args.format)
 
     if args.watch:
         class MikadoGraphWatcher(FileSystemEventHandler):
             def on_modified(self, event):
                 if event == FileModifiedEvent(os.path.join('.', args.file)):
-                    render_graph(args.file, args.view, args.output)
+                    render_graph(args.file, args.view, args.output, args.format)
 
         event_handler = MikadoGraphWatcher()
         observer = Observer()
