@@ -2,25 +2,33 @@
 
 Python tool to draw graphs for Mikado refactoring.
 
-## Install
+## Quickstart
 
-```bash
-virtualenv -p python3 env
-source env/bin/activate
-pip install .
+Start by saving this description file as as `example.txt`
 ```
-
-## Usage
-
-```bash
-mikado mikado-graph/mikado_example.txt --view
+_ Extend X with Y
+    x Remove flag Z from X
+        x Replace D with E
+            x Check C
+    # Ignore this line
+    _ Add field X in Y
+        x Do fix A
+        _ Add B
+        x Check C
 ```
-will draw the graph from the specified input file and display it.
+Then run
+```bash
+pip install mikado-graph
+mikado example.txt --view
+```
+A new window should display the graph below
+![Example graph](https://github.com/SyrianSpock/mikado-graph/blob/master/example.png)
 
 Explore the options using `--help`
 ```bash
 mikado --help
 ```
+And learn more about the description file format below.
 
 ## Graph description symbols
 
@@ -32,6 +40,13 @@ There are three kinds of nodes in the graph
 - Pending tasks (drawn in red) are prefixed by any symbol that is not used by the above two choices.
   We recommend using `_` to keep the description file human readable
 
+## Dev & Deploy
+
+Deploy by running
+```bash
+python setup.py sdist bdist_wheel
+twine upload dist/*
+```
 
 ## Known issues
 

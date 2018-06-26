@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="mikado_graph",
-    version="0.1.0",
+    version="0.1.1",
     author="Salah Missri",
     author_email="syrianspock@gmail.com",
     description="Python tool to draw graphs for Mikado refactoring",
