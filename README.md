@@ -13,13 +13,13 @@ pip install .
 ## Usage
 
 ```bash
-python -m mikado-graph.mikado_graph mikado-graph/mikado_example.txt --view
+mikado mikado-graph/mikado_example.txt --view
 ```
 will draw the graph from the specified input file and display it.
 
 Explore the options using `--help`
 ```bash
-python -m mikado-graph.mikado_graph --help
+mikado --help
 ```
 
 ## Graph description symbols

@@ -17,6 +17,11 @@ setuptools.setup(
         "graphviz",
         "watchdog",
     ],
+    entry_points={
+        'console_scripts': [
+            'mikado = mikado_graph.mikado_graph:main',
+        ],
+    },
     classifiers=(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
