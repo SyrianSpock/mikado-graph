@@ -75,6 +75,7 @@ def _mikado_pairs(tasks, mikado_pairs, parents):
 
 def draw_mikado_graph(nodes, edges, format):
     graph = Digraph(strict=True, format=format)
+    graph.attr(rankdir='BT')
     for node in nodes: _append_node(graph, node)
     for edge in edges: _append_edge(graph, edge)
     return graph
