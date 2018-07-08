@@ -2,6 +2,10 @@
 
 Python tool to draw graphs for Mikado refactoring.
 
+- Learn what is the [Mikado method](https://pragprog.com/magazines/2010-06/the-mikado-method)
+- Learn how to [leverage Mikado graphs in your refactoring tasks](https://www.syrianspock.com/software/2018/07/08/mikado-refactoring/)
+- Python package [hosted on pypi](https://pypi.org/project/mikado-graph/)
+
 ## Quickstart
 
 Start by saving this description file as as `example.txt`
