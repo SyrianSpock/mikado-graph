@@ -37,7 +37,7 @@ And learn more about the description file format below.
 
 ## Graph description symbols
 
-Parent/child dependency is encoded by indentation.
+Parent/child dependency is encoded by indentation.  The indentation _must_ be the multiple of 4 spaces.
 
 There are three kinds of nodes in the graph
 - Comments are prefixed by one of the following symbol: `//`, `#`
