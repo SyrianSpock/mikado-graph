@@ -17,7 +17,7 @@ _ Extend X with Y
     # Ignore this line
     _ Add field X in Y
         x Do fix A
-        _ Add B
+        D Add B
         x Check C
 ```
 Then run
@@ -42,6 +42,7 @@ Parent/child dependency is encoded by indentation.  The indentation _must_ be th
 There are three kinds of nodes in the graph
 - Comments are prefixed by one of the following symbol: `//`, `#`
 - Done tasks (drawn in green) are prefixed by one of the following symbols: `v`, `V`, `x`, `X`
+- Current tasks (drawn in blue) are prefixed by one of the following symbols: `d`, `D`
 - Pending tasks (drawn in red) are prefixed by any symbol that is not used by the above two choices.
   We recommend using `_` to keep the description file human readable
 
