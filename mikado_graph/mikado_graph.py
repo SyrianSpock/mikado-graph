@@ -8,8 +8,9 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 
 
-Edge = namedtuple('Edge', ['src', 'dst', 'done'])
-Node = namedtuple('Node', ['name', 'done', 'goal'])
+Edge = namedtuple('Edge', ['src', 'dst', 'done', 'dev'])
+Node = namedtuple('Node', ['name', 'done', 'dev', 'goal'])
+DEV_SYMBOLS = ['d', 'D']
 DONE_SYMBOLS = ['x', 'X', 'v', 'V']
 COMMENT_SYMBOLS = ['#', '//']
 
@@ -41,14 +42,19 @@ def parse_mikado_description(description_file):
         lines = list(map(lambda line: line.replace('\t', ' ' * 4), lines))
         tasks = list((line.lstrip(), _depth_level(line)) for line in lines if len(line) > 0)
 
-        nodes = list(Node(name=_task_strip(task), done=_task_done(task), goal=depth==0) for task, depth in set(tasks))
-        edges = list(Edge(src=_task_strip(src), dst=_task_strip(dst), done=_task_done(src) and _task_done(dst))
+        nodes = list(Node(name=_task_strip(task), done=_task_done(task), dev=_task_dev(task), goal=depth==0)
+                     for task, depth in set(tasks))
+        edges = list(Edge(src=_task_strip(src), dst=_task_strip(dst), done=_task_done(src) and _task_done(dst),
+                          dev=_task_dev(src) and (_task_dev(dst) or _task_done(dst)))
                          for src, dst in set(_mikado_pairs(tasks, list(), list())))
 
         return nodes, edges
 
 def _task_done(task):
     return any(task.startswith(symbol) for symbol in DONE_SYMBOLS)
+
+def _task_dev(task):
+    return any(task.startswith(symbol) for symbol in DEV_SYMBOLS)
 
 def _task_strip(task):
     return ' '.join(task.split(' ')[1:]).lstrip()
@@ -81,11 +87,11 @@ def draw_mikado_graph(nodes, edges, format):
     return graph
 
 def _append_node(graph, node):
-    color = 'darkgreen' if node.done else 'firebrick'
+    color = 'dodgerblue1' if node.dev else 'darkgreen' if node.done else 'firebrick'
     graph.node(node.name, color=color, fontcolor=color, peripheries='2' if node.goal else '1')
 
 def _append_edge(graph, edge):
-    color = 'darkgreen' if edge.done else 'firebrick'
+    color = 'dodgerblue1' if edge.dev else 'darkgreen' if edge.done else 'firebrick'
     graph.edge(edge.src, edge.dst, color=color)
 
 def render_graph(mikado_description, view, output_file, format):
